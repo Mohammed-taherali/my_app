@@ -1,0 +1,68 @@
+<div class="page-container">
+    <header>
+        <div>
+            <button mat-button class="menu-button" (click)="sidenav.toggle()">
+                <mat-icon>{{ isMenuOpen ? 'menu_open' : 'menu' }}</mat-icon>
+            </button>
+
+            <a routerLink="/">
+                <span class="app-title">Budget Tracker</span>
+            </a>
+        </div>
+    </header>
+
+    <mat-sidenav-container class="sidenav-container">
+        <!-- <mat-sidenav #sidenav autoFocus="false" mode="over" [(opened)]="isMenuOpen" class="sidenav"
+            (click)="onSidenavClick()"> -->
+        <mat-sidenav #sidenav autoFocus="false" mode="over" [(opened)]="isMenuOpen" class="sidenav">
+            <div class="d-flex flex-column justify-content-between h-screen-size overflow-hidden">
+                <div>
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="openedsideTab == 'budgeting'"
+                            (closed)="openedsideTab != 'budgeting'">
+                            <mat-expansion-panel-header (click)="openPanel('budgeting')">
+                                <mat-panel-title>
+                                    Budgeting
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <a mat-button (click)="goTo('/dashboard/home')">Home</a>
+                            <a mat-button (click)="goTo('/dashboard/addTransaction')">Add Transaction</a>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="openedsideTab == 'savings'"
+                            (closed)="openedsideTab != 'savings'">
+                            <mat-expansion-panel-header (click)="openPanel('savings')">
+                                <mat-panel-title>
+                                    Savings
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <a mat-button (click)="goTo('/dashboard/savings')">Add SIP</a>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="openedsideTab == 'tasks'" (closed)="openedsideTab != 'tasks'">
+                            <mat-expansion-panel-header (click)="openPanel('tasks')">
+                                <mat-panel-title>
+                                    Tasks
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <a mat-button>Home</a>
+                            <a mat-button>Add Transaction</a>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+                <div>
+                    <a mat-button (click)="logoutUser()">
+                        <i class="fa-solid fa-power-off"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <main>
+                <router-outlet></router-outlet>
+            </main>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

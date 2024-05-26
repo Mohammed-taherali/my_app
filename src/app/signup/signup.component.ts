@@ -23,7 +23,7 @@ export class SignupComponent {
   onSubmit() {
     const rawForm = this.form.getRawValue()
     this.authService.registerUser(rawForm.username, rawForm.email, rawForm.password).subscribe(() => {
-      this._router.navigateByUrl("/")
+      this._router.navigateByUrl("/dashboard/home")
     })
   }
 }

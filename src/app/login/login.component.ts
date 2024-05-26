@@ -22,8 +22,12 @@ export class LoginComponent {
 
   onSubmit() {
     const rawForm = this.form.getRawValue()
-    this.authService.loginUser(rawForm.email, rawForm.password).subscribe(() => {
-      this._router.navigateByUrl("/")
-    })
+    this.authService.loginUser(rawForm.email, rawForm.password)
+    // this.authService.loginUser(rawForm.email, rawForm.password).subscribe(() => {
+    //   this.authService.getCurrentUser().subscribe(user => {
+    //     // console.log('Current user:', user);
+    //     this._router.navigateByUrl("/dashboard/home")
+    //   });
+    // })
   }
 }

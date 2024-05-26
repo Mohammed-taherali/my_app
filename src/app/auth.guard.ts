@@ -15,6 +15,7 @@ export const authGuard: CanActivateFn = (route, state) => {
           email: user.email!,
           username: user.displayName!
         });
+        authService.initializeUser()
         console.log("auth guard, user present", authService.currentUserSig());
         return true;
       } else {

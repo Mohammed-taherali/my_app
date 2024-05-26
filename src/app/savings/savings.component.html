@@ -1,0 +1,70 @@
+<main id="savings-component">
+    <form [formGroup]="sf" (ngSubmit)="onSubmit()" class="row">
+        <div class="col-lg-4 col-md-4 col-12">
+            <mat-form-field class="mb-3 w-100">
+                <mat-label>SIP name</mat-label>
+                <input matInput placeholder="Ex: A car..." formControlName="sipName" required>
+                <mat-icon matSuffix>account_balance</mat-icon>
+                <!-- <mat-hint>Name of item for SIP</mat-hint> -->
+                <mat-error *ngIf="sf.get('sipName')?.hasError('required')">
+                    SIP name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-md-4 col-12">
+            <mat-form-field floatLabel="always" class="mb-3 w-100">
+                <mat-label>Total Amount</mat-label>
+                <input matInput type="number" class="amount-field" formControlName="totalAmount" placeholder="0"
+                    (ngModelChange)="checkMonthlySipError(); updateEndDate()">
+                <span matTextPrefix>&#x20B9; &nbsp;</span>
+                <span matTextSuffix>.00</span>
+                <mat-error *ngIf="sf.get('totalAmount')?.hasError('required')">
+                    Total amount is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="sf.get('totalAmount')?.hasError('min')">
+                    Total amount must be <strong>greater than zero</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-md-4 col-12">
+            <mat-form-field floatLabel="always" class="mb-3 w-100 disabled-border">
+                <mat-label>Monthly SIP</mat-label>
+                <input matInput type="number" class="amount-field" formControlName="monthlySip" placeholder="0"
+                    (ngModelChange)="checkMonthlySipError(); updateEndDate()">
+                <span matTextPrefix>&#x20B9; &nbsp;</span>
+                <span matTextSuffix>.00</span>
+                <mat-error *ngIf="sf.get('monthlySip')?.hasError('required')">
+                    Monthly SIP amount is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="sf.get('monthlySip')?.hasError('min')">
+                    Monthly SIP amount must be <strong>greater than zero</strong>
+                </mat-error>
+                <mat-error *ngIf="sf.get('monthlySip')?.hasError('monthlySipError')">
+                    Monthly SIP amount must be <strong>less than total amount</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-md-4 col-12">
+            <!-- <mat-form-field appearance="fill" class="mb-3 w-100">
+                <mat-label>Expected End date</mat-label>
+                <input matInput placeholder="End date" formControlName="endDate">
+                <mat-icon matSuffix>calendar_month</mat-icon>
+            </mat-form-field> -->
+            <mat-form-field class="w-100">
+                <mat-label>Expected End date</mat-label>
+                <input matInput [matDatepicker]="dp" formControlName="endDate">
+                <mat-hint>MM/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+                <mat-datepicker #dp startView="multi-year"
+                    panelClass="example-month-picker">
+                </mat-datepicker>
+                <!-- <mat-datepicker #dp startView="multi-year" (monthSelected)="setMonthAndYear($event, dp)"
+                    panelClass="example-month-picker">
+                </mat-datepicker> -->
+            </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-md-4 col-12 d-flex align-items-center justify-content-end">
+            <button mat-flat-button color="primary" type="submit">Add SIP</button>
+        </div>
+    </form>
+</main>

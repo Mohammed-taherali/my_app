@@ -1,0 +1,16 @@
+.amount-field {
+    text-align: right;
+}
+
+input.amount-field::-webkit-outer-spin-button,
+input.amount-field::-webkit-inner-spin-button {
+    display: none;
+}
+
+input.amount-field {
+    -moz-appearance: textfield;
+}
+
+.disabled-border {
+    background-color: 1px solid #c5c5c5 !important;
+}
