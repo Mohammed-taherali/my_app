@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../services/auth.service';
@@ -9,7 +10,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-user-dashboard',
   standalone: true,
-  imports: [RouterModule, MatIconModule, MatSidenavModule, MatExpansionModule, CommonModule, MatButtonModule],
+  imports: [RouterModule, MatIconModule, MatSidenavModule, MatExpansionModule, CommonModule, MatButtonModule, MatMenuModule],
   templateUrl: './user-dashboard.component.html',
   styleUrl: './user-dashboard.component.css'
 })
@@ -22,10 +23,6 @@ export class UserDashboardComponent {
 
   public onSidenavClick(): void {
     this.isMenuOpen = false;
-  }
-
-  openPanel(toOpen: string) {
-    this.openedsideTab = toOpen;
   }
 
   goTo(path: string) {

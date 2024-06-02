@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -19,8 +19,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Sort } from "@angular/material/sort";
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { DbManagementService } from '../services/db-management.service';
-import { AlertService } from '../services/alert.service';
+import { DbManagementService } from '../../services/db-management.service';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-home',
@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
   transactions: any;
   dataSource!: MatTableDataSource<any>;
   // columnsToDisplay = ['serial', 'transactionName', 'amount', 'expand'];
-  columnsToDisplay = ['serial', 'transactionName', 'amount', 'type'];
+  columnsToDisplay = ['transactionName', 'amount', 'type'];
   // columnsToDisplay = ['serial', 'transactionName', 'amount', 'type', 'balance', 'transDate'];
   expandedElement: any | null;
   isFiltered: boolean = false;

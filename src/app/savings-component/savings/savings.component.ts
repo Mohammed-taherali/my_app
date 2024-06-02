@@ -4,15 +4,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { AlertService } from '../services/alert.service';
-import { AuthService } from '../services/auth.service';
+import { AlertService } from '../../services/alert.service';
+import { AuthService } from '../../services/auth.service';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import { default as _rollupMoment, Moment } from 'moment';
-import { SavingsManagementService } from '../services/savings-management.service';
+import { SavingsManagementService } from '../../services/savings-management.service';
 
 const moment = _rollupMoment || _moment;
 
@@ -56,21 +56,20 @@ export class SavingsComponent {
 
   constructor() {
     this.sf = this.fb.group({
-      totalAmount: [0, [Validators.required, Validators.min(1)]],
-      pendingAmount: [0],
-      monthlySip: [0, [Validators.required, Validators.min(1)]],
+      totalAmount: ["", [Validators.required, Validators.min(1)]],
+      pendingAmount: [""],
+      monthlySip: ["", [Validators.required, Validators.min(1)]],
       endDate: [{ value: moment(), disabled: true }],
       dateCreated: [''],
       dateModified: [''],
       sipName: ['', Validators.required],
-      sipDetails: [{}],
+      savedAmount: [0],
       user: [this.authService.user]
     });
   }
 
   async onSubmit() {
     if (!this.sf.valid) {
-      console.log("submit invalid form", this.sf.value);
       await this.alertService.showAlert("error", "Please fill in all the fields", "OK", false, 3000)
       return;
     }
@@ -84,8 +83,9 @@ export class SavingsComponent {
     this.sf.get("dateCreated")!.setValue(new Date())
     this.sf.get("dateModified")!.setValue(new Date())
 
+    // console.log("final form value: ", this.sf.getRawValue());
+    
     // use getRawValue since the endDate is disabled
-    console.log("final form value: ", this.sf.getRawValue());
     const docId = await this.savingsService.addSIP(this.sf.getRawValue())
     console.log("doc written with ID: ", docId);
     this.alertService.openSnackBar("SIP added successfully")

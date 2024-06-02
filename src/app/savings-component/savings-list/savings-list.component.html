@@ -1,0 +1,74 @@
+<main id="savings-page">
+
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <a [routerLink]="['/dashboard/addSavings']">
+            <button class="btn btn-success btn-sm">
+                Add SIP <i class="fa-solid fa-plus"></i>
+            </button>
+        </a>
+    </div>
+
+    <ng-container *ngIf="savings && savings.length > 0">
+        <div class="table-container">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort
+                (matSortChange)="sortData($event)" [trackBy]="trackByIdentity">
+                <ng-container matColumnDef="sipName" sticky>
+                    <th mat-sort-header mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.sipName | titlecase}} </td>
+                </ng-container>
+                <ng-container matColumnDef="totalAmount">
+                    <th mat-sort-header mat-header-cell *matHeaderCellDef> Total (&#x20B9;) </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.totalAmount}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="pendingAmount">
+                    <th mat-sort-header mat-header-cell *matHeaderCellDef> Pending (&#x20B9;) </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.pendingAmount}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="paidAmount">
+                    <th mat-sort-header mat-header-cell *matHeaderCellDef> Saved (&#x20B9;) </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.savedAmount}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="endDate">
+                    <th mat-sort-header mat-header-cell *matHeaderCellDef> End date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.endDate.toDate() | date: "MMM-YYYY"}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="star" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                    <td mat-cell *matCellDef="let element" class="p-0">
+                        <button mat-button [matMenuTriggerFor]="beforeMenu" class="mat-small more-btn">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #beforeMenu="matMenu" xPosition="before" class="custom-width">
+                            <a [routerLink]="['/dashboard/addSip', element.id]" mat-menu-item>
+                                <mat-icon>add_circle</mat-icon> Add savings
+                            </a>
+                            <a [routerLink]="['/dashboard/addSavings']" mat-menu-item>
+                                <mat-icon>edit</mat-icon> Edit
+                            </a>
+                            <a [routerLink]="['/dashboard/sipDetails']" mat-menu-item>
+                                <mat-icon>info</mat-icon> Details
+                            </a>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+            </table>
+        </div>
+    </ng-container>
+    <mat-paginator [pageSizeOptions]="[10, 5, 25, 100]" aria-label="Select page of savings">
+    </mat-paginator>
+
+    <ng-container *ngIf="savings && savings.length == 0">
+        <p>No Savings found!</p>
+    </ng-container>
+
+
+</main>

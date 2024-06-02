@@ -115,6 +115,10 @@
     text-transform: capitalize;
 }
 
+.letter-spacing-normal {
+    letter-spacing: normal !important;
+}
+
 .mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content {
     right: 0px !important;
 }

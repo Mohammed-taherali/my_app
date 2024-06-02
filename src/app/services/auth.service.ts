@@ -1,9 +1,10 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, user } from '@angular/fire/auth';
+import { Auth, UserCredential, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, user } from '@angular/fire/auth';
 import { Observable, from, of } from 'rxjs';
 import { userInterface } from '../user.interface';
 import { DbManagementService } from './db-management.service';
 import { Router } from '@angular/router';
+import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class AuthService {
   router = inject(Router)
   firebaseAuth = inject(Auth)
   dbService = inject(DbManagementService)
+  alertService: AlertService = inject(AlertService)
   user$ = user(this.firebaseAuth)
   currentUserSig = signal<userInterface | null | undefined>(undefined)
 
@@ -38,9 +40,18 @@ export class AuthService {
   }
 
   async loginUser(email: string, password: string): Promise<void> {
-    const response = await signInWithEmailAndPassword(this.firebaseAuth, email, password)
-    this.user = response.user.email!
-    this.uid = response.user.uid!
+    let response: UserCredential | undefined;
+    try {
+      response = await signInWithEmailAndPassword(this.firebaseAuth, email, password)
+    } catch (error: any) {
+      // console.log("error code: ", error.code);
+      // console.log("error message: ", error.message);
+      this.handleAuthError(error.code)
+      // this.alertService.showAlert("error", "some error: " + error,)
+      return
+    }
+    this.user = response?.user.email!
+    this.uid = response?.user.uid!
     await this.dbService.getUserBalance(this.uid);
     this.router.navigateByUrl("/dashboard/home")
   }
@@ -60,5 +71,23 @@ export class AuthService {
       this.uid = this.firebaseAuth.currentUser?.uid
       this.dbService.getUserBalance(this.uid)
     }
+  }
+
+  handleAuthError(code: any) {
+    let errorMsg = "";
+    switch (code) {
+      case "auth/user-not-found":
+        errorMsg = "No user found! Please create an account."
+        break;
+      case "auth/email-already-exists":
+        errorMsg = "This email is already in user! Please use another email ID."
+        break;
+      case "auth/invalid-credential":
+        errorMsg = "Incorrect ID or password!"
+        break;
+      default:
+        break;
+    }
+    this.alertService.showAlert("error", errorMsg, "OK", undefined, 3000)
   }
 }

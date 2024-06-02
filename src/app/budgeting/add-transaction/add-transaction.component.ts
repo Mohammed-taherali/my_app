@@ -1,15 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { DbManagementService } from '../services/db-management.service';
+import { DbManagementService } from '../../services/db-management.service';
 import { CommonModule } from '@angular/common';
-import { AlertService } from '../services/alert.service';
-import { AuthService } from '../services/auth.service';
+import { AlertService } from '../../services/alert.service';
+import { AuthService } from '../../services/auth.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-add-transaction',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatSelectModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule],
   templateUrl: './add-transaction.component.html',
   styleUrl: './add-transaction.component.css'
 })
@@ -25,11 +29,10 @@ export class AddTransactionComponent {
 
   constructor() {
     this.tf = this.fb.group({
-      amount: [0, [Validators.required, Validators.min(1)]],
+      amount: ["", [Validators.required, Validators.min(1)]],
       balanceAmount: [this.dbService.userBalance],
       dateCreated: [""],
       dateModified: [""],
-      fromIncome: [true],
       transactionName: ["", Validators.required],
       type: [""],
       user: [this.username]
@@ -39,18 +42,16 @@ export class AddTransactionComponent {
   async onSubmit() {
     this.markFormGroupTouched(this.tf);
     if (!this.tf.valid) {
-      await this.alertService.showAlert("error", "Please fill in all the required fields", "Dismiss", false);
+      this.alertService.showAlert("error", "Please fill in all the required fields", "Dismiss", false);
       return;
     }
-
     const res = await this.alertService.showAlert('question', 'Are you sure you want to add this transaction?', 'Yes', true);
     if (!res) {
       return;
     }
     if (this.type == "income") {
-      this.tf.removeControl("fromIncome")
       this.dbService.userBalance += parseInt(this.tf.get("amount")!.value)
-    } else if (this.type == "expense" && this.tf.get("fromIncome")!.value == true) {
+    } else if (this.type == "expense") {
       this.dbService.userBalance -= parseInt(this.tf.get("amount")!.value)
     }
     this.tf.get("balanceAmount")!.setValue(this.dbService.userBalance);
@@ -66,11 +67,7 @@ export class AddTransactionComponent {
     await this.dbService.updateBalance();
     this.tf.get("transactionName")!.reset()
     this.tf.get("amount")!.reset()
-
-    // again add the type fromIncome parameter for new transaction addition
-    if (!this.tf.contains("fromIncome")) {
-      this.tf.addControl("fromIncome", new FormControl(false))
-    }
+    this.tf.get("transactionName")!.setErrors(null)
   }
 
   markFormGroupTouched(formGroup: FormGroup) {

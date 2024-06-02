@@ -1,13 +1,25 @@
 <div class="page-container">
     <header>
-        <div>
-            <button mat-button class="menu-button" (click)="sidenav.toggle()">
-                <mat-icon>{{ isMenuOpen ? 'menu_open' : 'menu' }}</mat-icon>
-            </button>
-
-            <a routerLink="/">
-                <span class="app-title">Budget Tracker</span>
-            </a>
+        <div class="d-flex align-items-center w-100 justify-content-between">
+            <div>
+                <button mat-button class="menu-button" (click)="sidenav.toggle()">
+                    <mat-icon>{{ isMenuOpen ? 'menu_open' : 'menu' }}</mat-icon>
+                </button>
+                <a routerLink="/">
+                    <span class="app-title">Finance Management</span>
+                </a>
+            </div>
+            <div>
+                <button mat-button [matMenuTriggerFor]="logoutmenu">
+                    <mat-icon>person</mat-icon>
+                    <i class="fa-solid fa-angle-down"></i>
+                </button>
+                <mat-menu #logoutmenu="matMenu" xPosition="before">
+                    <a mat-menu-item (click)="logoutUser()">
+                        <mat-icon>power_settings_new</mat-icon>&nbsp; Logout
+                    </a>
+                </mat-menu>
+            </div>
         </div>
     </header>
 
@@ -15,49 +27,52 @@
         <!-- <mat-sidenav #sidenav autoFocus="false" mode="over" [(opened)]="isMenuOpen" class="sidenav"
             (click)="onSidenavClick()"> -->
         <mat-sidenav #sidenav autoFocus="false" mode="over" [(opened)]="isMenuOpen" class="sidenav">
-            <div class="d-flex flex-column justify-content-between h-screen-size overflow-hidden">
-                <div>
-                    <mat-accordion>
-                        <mat-expansion-panel (opened)="openedsideTab == 'budgeting'"
-                            (closed)="openedsideTab != 'budgeting'">
-                            <mat-expansion-panel-header (click)="openPanel('budgeting')">
-                                <mat-panel-title>
-                                    Budgeting
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <a mat-button (click)="goTo('/dashboard/home')">Home</a>
-                            <a mat-button (click)="goTo('/dashboard/addTransaction')">Add Transaction</a>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                    <mat-accordion>
-                        <mat-expansion-panel (opened)="openedsideTab == 'savings'"
-                            (closed)="openedsideTab != 'savings'">
-                            <mat-expansion-panel-header (click)="openPanel('savings')">
-                                <mat-panel-title>
-                                    Savings
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <a mat-button (click)="goTo('/dashboard/savings')">Add SIP</a>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                    <mat-accordion>
-                        <mat-expansion-panel (opened)="openedsideTab == 'tasks'" (closed)="openedsideTab != 'tasks'">
-                            <mat-expansion-panel-header (click)="openPanel('tasks')">
-                                <mat-panel-title>
-                                    Tasks
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <a mat-button>Home</a>
-                            <a mat-button>Add Transaction</a>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                </div>
-                <div>
-                    <a mat-button (click)="logoutUser()">
-                        <i class="fa-solid fa-power-off"></i> Logout
+            <!-- <div class="d-flex flex-column justify-content-between h-screen-size overflow-hidden"> -->
+            <mat-accordion>
+                <mat-expansion-panel [expanded]="openedsideTab === 'budgeting'">
+                    <mat-expansion-panel-header (click)="openedsideTab = 'budgeting'">
+                        <mat-panel-title>
+                            <mat-icon>currency_exchange</mat-icon>&nbsp; Expense Tracking
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <a mat-button class="letter-spacing-normal" (click)="goTo('/dashboard/home')">
+                        <mat-icon>list</mat-icon>&nbsp; All Transactions
                     </a>
-                </div>
-            </div>
+                    <a mat-button class="letter-spacing-normal" (click)="goTo('/dashboard/addTransaction')">
+                        <mat-icon>add_box</mat-icon>&nbsp; Add Transaction
+                    </a>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <mat-accordion>
+                <mat-expansion-panel [expanded]="openedsideTab === 'savings'">
+                    <mat-expansion-panel-header (click)="openedsideTab = 'savings'">
+                        <mat-panel-title>
+                            <mat-icon>account_balance</mat-icon>&nbsp; Savings Management
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <a mat-button class="letter-spacing-normal" (click)="goTo('/dashboard/savingsList')">
+                        <mat-icon>list</mat-icon>&nbsp; My savings
+                    </a>
+                    <a mat-button class="letter-spacing-normal" (click)="goTo('/dashboard/addSavings')">
+                        <mat-icon>add_circle</mat-icon>&nbsp; Add savings
+                    </a>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <mat-accordion>
+                <mat-expansion-panel [expanded]="openedsideTab === 'tasks'">
+                    <mat-expansion-panel-header (click)="openedsideTab ='tasks'">
+                        <mat-panel-title>
+                            <mat-icon>add_task</mat-icon>&nbsp; Tasks Management
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <a mat-button class="letter-spacing-normal">
+                        <mat-icon>event_upcoming</mat-icon>&nbsp; Coming soon!
+                    </a>
+                    <!-- <a mat-button class="letter-spacing-normal">Home</a>
+                            <a mat-button class="letter-spacing-normal">Add Transaction</a> -->
+                </mat-expansion-panel>
+            </mat-accordion>
+            <!-- </div> -->
         </mat-sidenav>
         <mat-sidenav-content>
             <main>

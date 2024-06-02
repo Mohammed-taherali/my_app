@@ -1,0 +1,51 @@
+<main id="savings-component">
+    <form [formGroup]="sf" (ngSubmit)="onSubmit()" class="row" *ngIf="isLoaded">
+        <div class="col-lg-4 col-md-4 col-12">
+            <mat-form-field class="mb-3 w-100">
+                <mat-label>SIP name</mat-label>
+                <input matInput formControlName="sipName" required>
+                <mat-icon matSuffix>account_balance</mat-icon>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-md-4 col-12">
+            <mat-form-field class="mb-3 w-100">
+                <mat-label>Pending Amount</mat-label>
+                <input matInput formControlName="pendingAmount" type="number" required>
+                <mat-icon matSuffix>work_history</mat-icon>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-md-4 col-12">
+            <mat-form-field class="mb-3 w-100">
+                <mat-label>Saved Amount</mat-label>
+                <input matInput formControlName="savedAmount" type="number" required>
+                <mat-icon matSuffix>health_and_safety</mat-icon>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-md-4 col-12">
+            <mat-form-field class="mb-3 w-100">
+                <mat-label>Total Amount</mat-label>
+                <input matInput formControlName="totalAmount" type="number" required>
+                <mat-icon matSuffix>monetization_on</mat-icon>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-md-4 col-12">
+            <mat-form-field class="mb-3 w-100">
+                <mat-label>This month's SIP amount</mat-label>
+                <input matInput formControlName="monthlySip" type="number" required>
+                <mat-icon matSuffix>currency_rupee</mat-icon>
+                <mat-error *ngIf="sf.get('monthlySip')?.hasError('required')">
+                    SIP amount is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="sf.get('monthlySip')?.hasError('min')">
+                    SIP amount must be <strong>greater than zero</strong>
+                </mat-error>
+                <mat-error *ngIf="sf.get('monthlySip')?.hasError('max')">
+                    SIP amount must be <strong>less than or equal to {{sf.get('pendingAmount')?.value}}</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-4 col-md-4 col-12 d-flex align-items-center justify-content-end">
+            <button mat-flat-button color="primary" type="submit" [disabled]="!sf.valid">Add savings</button>
+        </div>
+    </form>
+</main>
