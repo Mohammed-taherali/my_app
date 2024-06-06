@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -14,12 +14,17 @@ import { CommonModule } from '@angular/common';
   templateUrl: './user-dashboard.component.html',
   styleUrl: './user-dashboard.component.css'
 })
-export class UserDashboardComponent {
+export class UserDashboardComponent implements OnInit {
   router = inject(Router);
   authService = inject(AuthService);
+  username: string = ""
 
   public isMenuOpen: boolean = false;
   openedsideTab: string = "";
+
+  ngOnInit() {
+    this.username = this.authService.username
+  }
 
   public onSidenavClick(): void {
     this.isMenuOpen = false;

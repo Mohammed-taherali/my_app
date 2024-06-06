@@ -148,6 +148,15 @@ export class DbManagementService {
 
   }
 
+  async checkUserPresent(uid: string) {
+    const docSnap = await getDoc(doc(this.firestore, "users", uid));
+    if (docSnap.exists()) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   async updateBalance() {
     const docRef = doc(this.firestore, "balance", this.balanceDocId)
     return await updateDoc(docRef, {

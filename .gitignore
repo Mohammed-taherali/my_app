@@ -42,3 +42,9 @@ testem.log
 Thumbs.db
 
 src/environments
+
+# Firebase files
+/.firebase
+firestore.*
+.firebaserc
+firebase.*

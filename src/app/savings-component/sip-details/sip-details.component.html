@@ -1,0 +1,40 @@
+<main id="details-component">
+    <ng-container *ngIf="sipDetails">
+        <a [routerLink]="['/dashboard/savingsList']">
+            <button mat-flat-button type="button" color="accent" class="mb-3">
+                <mat-icon>arrow_back</mat-icon> Back
+            </button>
+        </a>
+        <div class="d-flex flex-wrap details-div">
+            <div class="col-lg-4 col-md-4 col-6">
+                SIP name: {{lastSip.sipName}}
+            </div>
+            <div class="col-lg-4 col-md-4 col-6">
+                Total: &#8377; {{lastSip.totalAmount}}
+            </div>
+            <div class="col-lg-4 col-md-4 col-6">
+                Saved: &#8377; {{lastSip.savedAmount}}
+            </div>
+        </div>
+        <mat-expansion-panel *ngFor="let sip of sipDetails">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{sip.dateModified.toDate() | date: "dd MMM yyyy"}}
+                </mat-panel-title>
+                <mat-panel-description class="d-flex justify-content-end">
+                    <div class="d-flex align-items-center">
+                        &#8377; {{ sip.monthlySip }}
+                    </div>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="row col-lg-6 col-md-6 col-12">
+                <div class="col-8"><b>Total amount saved: </b></div>
+                <div class="col-4"> {{sip.savedAmount}} </div>
+            </div>
+            <div class="row col-lg-6 col-md-6 col-12">
+                <div class="col-8"><b>Pending Amount</b></div>
+                <div class="col-4"> {{sip.pendingAmount}} </div>
+            </div>
+        </mat-expansion-panel>
+    </ng-container>
+</main>

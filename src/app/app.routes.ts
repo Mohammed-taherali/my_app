@@ -9,6 +9,7 @@ import { SavingsComponent } from './savings-component/savings/savings.component'
 import { SavingsListComponent } from './savings-component/savings-list/savings-list.component';
 import { AddSipComponent } from './savings-component/add-sip/add-sip.component';
 import { LandingComponent } from './landing/landing.component';
+import { SipDetailsComponent } from './savings-component/sip-details/sip-details.component';
 
 export const routes: Routes = [
     { path: "", component: LandingComponent, canActivate: [authGuard] },
@@ -24,6 +25,7 @@ export const routes: Routes = [
             { path: "addSavings", component: SavingsComponent },
             { path: "savingsList", component: SavingsListComponent },
             { path: "addSip/:sipId", component: AddSipComponent },
+            { path: "sipDetails/:sipId", component: SipDetailsComponent },
         ]
     },
     { path: "**", redirectTo: "" }

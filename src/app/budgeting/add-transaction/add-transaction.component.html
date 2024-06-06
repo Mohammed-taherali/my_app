@@ -1,5 +1,11 @@
 <main id="transaction">
     <section id="transaction-form">
+        <a [routerLink]="['/dashboard/home']">
+            <button mat-flat-button type="button" color="accent" class="mb-3">
+                <mat-icon>arrow_back</mat-icon> Home
+            </button>
+        </a>
+
         <div class="row">
             <div class="col-lg-6 col-md-6 col-12">
                 <mat-form-field class="w-100">
@@ -16,7 +22,8 @@
             <div class="col-lg-6 col-md-6 col-12">
                 <mat-form-field class="w-100">
                     <mat-label>{{type | titlecase}} name</mat-label>
-                    <input matInput placeholder="Ex: Groceries, clothing etc" formControlName="transactionName" required>
+                    <input matInput placeholder="Ex: Groceries, clothing etc" formControlName="transactionName"
+                        required>
                     <mat-icon matSuffix>account_balance</mat-icon>
                     <mat-error *ngIf="tf.get('transactionName')?.hasError('required')">
                         {{type}} name is <strong>required</strong>
@@ -74,7 +81,8 @@
             </div> -->
             <div class="d-flex align-items-center justify-content-end">
                 <!-- <button class="btn btn-sm btn-success">Add {{ type }} </button> -->
-                <button mat-flat-button type="submit" color="primary" [disabled]="!tf.valid">Add {{ type | titlecase}}</button>
+                <button mat-flat-button type="submit" color="primary" [disabled]="!tf.valid">Add {{ type |
+                    titlecase}}</button>
             </div>
         </form>
     </section>

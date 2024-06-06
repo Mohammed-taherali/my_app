@@ -2,8 +2,8 @@
 
     <div class="d-flex align-items-center justify-content-between mb-4">
         <a [routerLink]="['/dashboard/addSavings']">
-            <button class="btn btn-success btn-sm">
-                Add SIP <i class="fa-solid fa-plus"></i>
+            <button mat-flat-button color="accent">
+                <mat-icon>add_circle</mat-icon> Add SIP
             </button>
         </a>
     </div>
@@ -52,7 +52,7 @@
                             <a [routerLink]="['/dashboard/addSavings']" mat-menu-item>
                                 <mat-icon>edit</mat-icon> Edit
                             </a>
-                            <a [routerLink]="['/dashboard/sipDetails']" mat-menu-item>
+                            <a [routerLink]="['/dashboard/sipDetails', element.id]" mat-menu-item>
                                 <mat-icon>info</mat-icon> Details
                             </a>
                         </mat-menu>

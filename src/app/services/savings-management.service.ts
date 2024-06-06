@@ -53,4 +53,15 @@ export class SavingsManagementService {
     });
     return docs
   }
+
+  async getAllSips(sipId: string) {
+    const q = query(collection(this.firestore, "savingsDetails"), where("sipId", "==", sipId), orderBy("dateCreated", "desc"))
+    const docSnap = await getDocs(q)
+    let docData: any[] = [];
+    docSnap.forEach(doc => {
+      docData.push(doc.data())
+    })
+    return docData
+    // const docSnap = getDocs(doc(this.firestore, "savingsDetails"))
+  }
 }

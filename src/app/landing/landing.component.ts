@@ -1,11 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [],
+  imports: [SpinnerComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })

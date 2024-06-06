@@ -9,11 +9,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-add-transaction',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, RouterModule],
   templateUrl: './add-transaction.component.html',
   styleUrl: './add-transaction.component.css'
 })
@@ -68,6 +69,7 @@ export class AddTransactionComponent {
     this.tf.get("transactionName")!.reset()
     this.tf.get("amount")!.reset()
     this.tf.get("transactionName")!.setErrors(null)
+    this.tf.get("amount")!.setErrors(null)
   }
 
   markFormGroupTouched(formGroup: FormGroup) {

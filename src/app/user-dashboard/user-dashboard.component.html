@@ -5,11 +5,12 @@
                 <button mat-button class="menu-button" (click)="sidenav.toggle()">
                     <mat-icon>{{ isMenuOpen ? 'menu_open' : 'menu' }}</mat-icon>
                 </button>
-                <a routerLink="/">
+                <!-- <a routerLink="/">
                     <span class="app-title">Finance Management</span>
-                </a>
+                </a> -->
             </div>
             <div>
+                {{username}}
                 <button mat-button [matMenuTriggerFor]="logoutmenu">
                     <mat-icon>person</mat-icon>
                     <i class="fa-solid fa-angle-down"></i>

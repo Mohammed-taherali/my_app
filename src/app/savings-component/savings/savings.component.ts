@@ -13,6 +13,7 @@ import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import { default as _rollupMoment, Moment } from 'moment';
 import { SavingsManagementService } from '../../services/savings-management.service';
+import { RouterModule } from '@angular/router';
 
 const moment = _rollupMoment || _moment;
 
@@ -40,6 +41,7 @@ export const MY_FORMATS = {
     MatIconModule,
     MatButtonModule,
     MatDatepickerModule,
+    RouterModule
   ],
   templateUrl: './savings.component.html',
   styleUrl: './savings.component.css',
